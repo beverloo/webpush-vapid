@@ -118,6 +118,8 @@ Original
    The terms "push message", "push service", "push subscription",
    "application server", and "user agent" are used as defined in
    [RFC8030].
+
+diff
 -->
 
 <section anchor="notational-conventions" title="Notational Conventions">
@@ -236,6 +238,8 @@ specifically mention JWT.
 Original
    This JWT would be valid until
    2016-01-23T04:36:08Z [RFC3339].
+
+diff
 -->
 
 This JWT would be valid until 2016-01-23T04:36:08Z <xref target="RFC3339"/>.</t>
@@ -515,6 +519,8 @@ parameter</t>
 
 Original
    Fragment identifier considerations:  None, see [RFC7159].
+
+diff
 -->
   <t hangText='Fragment identifier considerations:'>
   none (see <xref target="RFC7159"/>)</t>
