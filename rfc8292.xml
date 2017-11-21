@@ -156,7 +156,6 @@ of the origin (Section 6.1 of <xref target="RFC6454"/>) of the push resource URL
 binds the token to a specific push service and ensures that the token is
 reusable for all push resource URLs that share the same origin.</t>
 
-
   <t>An "exp" (Expiry) claim MUST be included with the time after which the token
 expires.  This limits the time over which a token is valid.  An "exp" claim
 MUST NOT be more than 24 hours from the time of the request.  Limiting this
@@ -164,20 +163,10 @@ to 24 hours balances the need for reuse against the potential cost and
 likelihood of theft of a valid token.</t>
 </list></t>
 
-
-<!--[rfced]  Should the citation here be to RFC 7231 rather than to RFC 7235?
-We note that RFC 7231 defines the 403 (Forbidden) status code while RFC
-7235 mentions it just once (with a citation to RFC 7231).
-
-Original
-   A push service MAY reject a request with a 403
-   (Forbidden) status code [RFC7235] if the JWT signature or its claims
-   are invalid.
--->
 <t>This JWT is included in an Authorization header field, using an
 authentication scheme of
 "vapid".  A push service MAY reject a request with a 403 (Forbidden) status
-code <xref target="RFC7235"/> if the JWT signature or its claims are invalid.  A push
+code <xref target="RFC7231"/> if the JWT signature or its claims are invalid.  A push
 service MUST NOT use information from an invalid token.</t>
 
 <t>The JWT MUST use a JSON Web Signature (JWS) <xref target="RFC7515"/>.  The signature MUST
@@ -434,10 +423,6 @@ reduces the chances that requests that use the new key will be categorized as
 abusive.</t>
 
 </section>
-<!--[rfced] Please note that we will communicate any updates to the
-IANA section to IANA once approved by the authors.
-
--->
 <section anchor="iana" title="IANA Considerations">
 
 <t>This document registers a new authentication scheme, a registry for parameters
@@ -471,38 +456,10 @@ policy <xref target="RFC8126"/>.</t>
 <t><list style="hanging">
   <t hangText='Parameter Name:'>
   A name for the parameter, which conforms to the <spanx style="verb">token</spanx> grammar <xref target="RFC7230"/></t>
-
-<!--[rfced]  Is a word missing here following "brief"?
-
-Original
-   Purpose (optional):  A brief identifying the purpose of the
-      parameter.
-
-Perhaps
-   Purpose (optional):  Brief text identifying the purpose of the
-      parameter
-
-Or
-   Purpose (optional):  A brief identification of parameter's purpose
--->
   <t hangText='Purpose (optional):'>
-  A brief identifying the purpose of the parameter</t>
-
-<!--[rfced]  Would it be more accurate to use "Header Field(s)" rather than
-"Header Fields" here and in the registry?
-
-Original
-   Header Fields:  The header field or header fields where the parameter
-      can be used.
-
-Perhaps
-   Header Field(s):  The header field(s) in which the parameter
-      can be used
--->
-
-
-  <t hangText='Header Field:'>
-  The header field or header fields in which the parameter can be used</t>
+  A brief text identifying the purpose of the parameter</t>
+  <t hangText='Header Field(s):'>
+  The header field(s) in which the parameter can be used</t>
   <t hangText='Specification:'>
   A link to the specification that defines the format and semantics of the
 parameter</t>
@@ -514,7 +471,7 @@ parameter</t>
 <texttable>
       <ttcol align='left'>Parameter Name</ttcol>
       <ttcol align='left'>Purpose</ttcol>
-      <ttcol align='left'>Header Fields</ttcol>
+      <ttcol align='left'>Header Field(s)</ttcol>
       <ttcol align='left'>Specification</ttcol>
       <c>t</c>
       <c>JWT authentication token</c>
@@ -626,6 +583,7 @@ Original
 <?rfc include="reference.RFC.8174"?>
 <?rfc include="reference.RFC.7519"?>
 <?rfc include="reference.RFC.6454"?>
+<?rfc include="reference.RFC.7231"?>
 <?rfc include="reference.RFC.7235"?>
 <?rfc include="reference.RFC.7515"?>
 <?rfc include="reference.RFC.7518"?>
