@@ -32,27 +32,12 @@
 
     <date year="2017" month="November"/>
 
-
-<!--[rfced] Please insert any keywords (beyond those that appear in
-the title) for use on https://www.rfc-editor.org/search.
--->
-
-<keyword>example</keyword>
-
+    <keyword>authentication</keyword>
+    <keyword>restricted</keyword>
+    <keyword>restriction</keyword>
+    <keyword>signature</keyword>
 
     <abstract>
-
-<!--[rfced]  We have updated the short title (appears in the center of the
-running header on the top of each page) as follows. Please let us know
-any objections.
-
-Original
-Self Identification
-
-Perhaps
-VAPID for Web Push
--->
-
 
 <t>An application server can use the Voluntary Application Server Identification (VAPID) method described in this document to voluntarily identify
 itself to a push service.  The "vapid" authentication scheme allows a client to
@@ -92,25 +77,12 @@ always efficient or even sufficient.  Providing more information about the
 application server directly to a push service allows the push service to better
 distinguish between legitimate and bogus requests.</t>
 
-<!--[rfced]  Should "this URI" read "a push subscription URI" in the second
-sentence below? The first sentence is included for context.
-
-Original
-   Additionally, the design of RFC 8030 relies on maintaining the
-   secrecy of push subscription URIs.  Any application server in
-   possession of this URI is able to send messages to the user agent.
-
-Perhaps
-   Additionally, the design of [RFC8030] relies on maintaining the
-   secrecy of push subscription URIs.  Any application server in
-   possession of a push subscription URI is able to send messages to the user agent.
--->
 <t>Additionally, the design of <xref target="RFC8030"/> relies on maintaining
 the secrecy of push
-subscription URIs.  Any application server in possession of this URI is able to
-send messages to the user agent.  If use of a subscription could be limited to
-a single application server, this would reduce the impact of the push
-subscription URI being learned by an unauthorized party.</t>
+subscription URIs.  Any application server in possession of a push subscription
+URI is able to send messages to the user agent.  If use of a subscription could
+be limited to a single application server, this would reduce the impact of the
+push subscription URI being learned by an unauthorized party.</t>
 
 <section anchor="voluntary-identification" title="Voluntary Identification">
 
@@ -168,20 +140,6 @@ server", and "user agent" are used as defined in <xref target="RFC8030"/>.</t>
 
 <t>Application servers that wish to self-identify generate and maintain a signing
 key pair.
-
-<!--[rfced]  We have updated this sentence to use "algorithm" in the
-expansion for ECDSA. We have also used initial capital letters for the
-expansion of ECDSA as this convention is more common in past RFCs. Please
-review and let us know any objections.
-
-Original
-   This key pair MUST be usable with elliptic curve
-   digital signature (ECDSA) over the P-256 curve [FIPS186].
-
-Perhaps
-   This key pair MUST be usable with the Elliptic Curve
-   Digital Signature Algorithm (ECDSA) over the P-256 curve [FIPS186].
--->
 
 This key pair MUST be usable with the Elliptic Curve Digital Signature Algorithm
 (ECDSA) over the P-256 curve <xref target="FIPS186"/>.  Use of this key when sending push
@@ -306,7 +264,7 @@ JWK = { "crv":"P-256",
 
 </section>
 </section>
-<section anchor="auth" title="Vapid Authentication Scheme">
+<section anchor="auth" title="VAPID Authentication Scheme">
 
 <t>This document defines a new HTTP authentication scheme <xref
 target="RFC7235"/> named "vapid". This
@@ -440,24 +398,10 @@ the creation of the push subscription.</t>
 <t>A push service MUST NOT forward the JWT or public key to the user agent when
 delivering the push message.</t>
 
-<!--[rfced] Please review our updates to the following text to ensure
-that we have captured your intent correctly.
-
-Original:
-An application server that needs to replace its signing key needs
+<t>An application server that needs to replace its signing key needs
 to request the creation of a new subscription by the user agent
-that is restricted to the updated key.
-
-Edited:
-An application server that has to replace its signing key needs to
-request the creation of a new subscription by the user agent; the new
-subscription is restricted to the updated key.
-
--->
-<t>An application server that has to replace its signing key needs to request
-the creation of a new subscription by the user agent; the new subscription is restricted to the
-updated key.  Application servers need to remember the key that was used when
-requesting the creation of a subscription.</t>
+that is restricted to the updated key.  Application servers need to remember
+the key that was used when requesting the creation of a subscription.</t>
 
 </section>
 </section>
@@ -499,7 +443,7 @@ IANA section to IANA once approved by the authors.
 <t>This document registers a new authentication scheme, a registry for parameters
 of that scheme, and a media type for push options.</t>
 
-<section anchor="vapid-authentication-scheme-registration" title="Vapid Authentication Scheme Registration">
+<section anchor="vapid-authentication-scheme-registration" title="VAPID Authentication Scheme Registration">
 
 <t>This document registers the "vapid" authentication scheme in the "Hypertext
 Transfer Protocol (HTTP) Authentication Scheme Registry" established by
@@ -510,20 +454,12 @@ Transfer Protocol (HTTP) Authentication Scheme Registry" established by
   vapid</t>
   <t hangText='Pointer to specification text:'>
   <xref target="auth"/> of this document</t>
-
-<!--[rfced] FYI - we have removed the following text per a note from IANA:
-
-Original:
-   Notes:  This scheme is origin-server only and does not define a
-      challenge.
-
--->
 </list></t>
 
 </section>
-<section anchor="vapid-authentication-scheme-parameters" title="Vapid Authentication Scheme Parameters">
+<section anchor="vapid-authentication-scheme-parameters" title="VAPID Authentication Scheme Parameters">
 
-<t>This document creates a "Vapid Authentication Scheme Parameters" registry for
+<t>This document creates a "VAPID Authentication Scheme Parameters" registry for
 parameters to the "vapid" authentication scheme.  These parameters are defined
 for use in requests (in the Authorization header field) and for challenges (in
 the WWW-Authenticate header field).  This registry is under the "Web Push
@@ -696,16 +632,6 @@ Original
 <?rfc include="reference.RFC.6068"?>
 <?rfc include="reference.RFC.2818"?>
 <?rfc include="reference.RFC.7159"?>
-
-<!--[rfced]  Please note that RFC 8126 obsoletes RFC 5226. We have replaced
-instances of RFC 5226 with RFC 8126. Please let us know any concerns.
--->
-
-<!--[rfced] Please note that we generally see RFC 8126 cited as an
-Informative Reference entry.  Please review and let us know if it
-should be moved.
-
--->
 <?rfc include="reference.RFC.8126"?>
 <?rfc include="reference.RFC.7230"?>
 <?rfc include="reference.RFC.6838"?>
@@ -768,13 +694,6 @@ of Benjamin Bangert, JR Conlin, Chris Karlof, Costin Manolache, Adam Roach, and
 others.</t>
 
 </section>
-
-
-<!-- [rfced]  Please review the use of "VAPID" (all caps), "Vapid" (initial
-caps), and "vapid" (lowercase and enclosed in quotation marks) in this
-document and let us know if any updates are needed. For example, should
-instances of "Vapid" be updated to "VAPID"?
--->
 
   </back>
 
