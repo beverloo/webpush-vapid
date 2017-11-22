@@ -46,7 +46,7 @@ signature can be used by the push service to attribute requests that are made
 by the same application server to a single entity.  The identification
 information can allow the operator of a push service to contact the operator of
 the application server.  The signature can be used to restrict the use of a
-push subscription to a single application server.</t>
+push message subscription to a single application server.</t>
 
     </abstract>
 
@@ -79,10 +79,10 @@ distinguish between legitimate and bogus requests.</t>
 
 <t>Additionally, the design of <xref target="RFC8030"/> relies on maintaining
 the secrecy of push
-subscription URIs.  Any application server in possession of a push subscription
+subscription URIs.  Any application server in possession of a push message subscription
 URI is able to send messages to the user agent.  If use of a subscription could
 be limited to a single application server, this would reduce the impact of the
-push subscription URI being learned by an unauthorized party.</t>
+push message subscription URI being learned by an unauthorized party.</t>
 
 <section anchor="voluntary-identification" title="Voluntary Identification">
 
@@ -107,21 +107,6 @@ has a well-established reputation might be given preference over an unidentified
 application server when choosing whether to discard a push message.</t>
 
 </section>
-
-
-<!--[rfced]  We see "push subscription" used twice in RFC 8030; it does not
-appear in the list of definition in the Section 1.1 though "push message
-subscription" is defined in that list. Please review and let us know if
-any updates are needed.
-
-Original
-   The terms "push message", "push service", "push subscription",
-   "application server", and "user agent" are used as defined in
-   [RFC8030].
-
-diff
--->
-
 <section anchor="notational-conventions" title="Notational Conventions">
 
 <t>    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
@@ -133,7 +118,7 @@ diff
     appear in all capitals, as shown here.
 </t>
 
-<t>The terms "push message", "push service", "push subscription", "application
+<t>The terms "push message", "push service", "push message subscription", "application
 server", and "user agent" are used as defined in <xref target="RFC8030"/>.</t>
 
 </section>
@@ -229,20 +214,8 @@ to meet formatting constraints.</t>
 <t>The <spanx style="verb">t</spanx> parameter of the Authorization header field contains a JWT; the <spanx style="verb">k</spanx>
 parameter includes the base64url-encoded key that signed that token.  The JWT
 input values and the JSON Web Key (JWK) <xref target="RFC7517"/> corresponding to the signing key are shown
-in <xref target="ex-decoded"/> with additional whitespace added for readability purposes.
-
-<!--[rfced]  Is further explanation needed here to explain how RFC 3339
-relates to this sentence? RFC 3339 discusses timestamps but does not
-specifically mention JWT.
-
-Original
-   This JWT would be valid until
-   2016-01-23T04:36:08Z [RFC3339].
-
-diff
--->
-
-This JWT would be valid until 2016-01-23T04:36:08Z <xref target="RFC3339"/>.</t>
+in <xref target="ex-decoded"/> with additional whitespace added for readability purposes.  This
+JWT would be valid until 2016-01-23T04:36:08Z.</t>
 
 <figure title="Decoded Example Values" anchor="ex-decoded"><artwork><![CDATA[
 JWT header = { "typ": "JWT", "alg": "ES256" }
@@ -316,15 +289,15 @@ code.</t>
 <section anchor="restrict" title="Subscription Restriction">
 
 <t>The public key of the application server serves as a stable identifier for the
-server.  This key can be used to restrict a push subscription to a specific
+server.  This key can be used to restrict a push message subscription to a specific
 application server.</t>
 
 <t>Subscription restriction reduces the reliance on endpoint secrecy by requiring
 that an application server provide a signed token when requesting delivery of a
 push message.  This provides an additional level of protection against leaking
-of the details of the push subscription.</t>
+of the details of the push message subscription.</t>
 
-<section anchor="creating-a-restricted-push-subscription" title="Creating a Restricted Push Subscription">
+<section anchor="creating-a-restricted-push-subscription" title="Creating a Restricted Push Message Subscription">
 
 <t>A user agent that wishes to create a restricted subscription includes the public
 key of the application server when requesting the creation of a push
@@ -333,7 +306,7 @@ servers that are able to provide a valid JWT signed by the corresponding private
 key.</t>
 
 <t>The user agent then adds the public key to the request to create a push
-subscription.  The push subscription request is extended to include a body.  The
+subscription.  The push message subscription request is extended to include a body.  The
 body of the request is a JSON object as described in <xref target="RFC7159"/>.  The user
 agent adds a "vapid" member to this JSON object that contains a public key on
 the P-256 curve, encoded in the uncompressed form <xref target="X9.62"/> and base64url
@@ -364,11 +337,11 @@ a public key.</t>
 </section>
 <section anchor="using-restricted-subscriptions" title="Using Restricted Subscriptions">
 
-<t>When a push subscription has been restricted to an application server, the
+<t>When a push message subscription has been restricted to an application server, the
 request for push message delivery MUST include a JWT signed by the private key
 that corresponds to the public key used when creating the subscription.</t>
 
-<t>A push service MUST reject a message sent to a restricted push subscription if
+<t>A push service MUST reject a message sent to a restricted push message subscription if
 that message includes no "vapid" authentication or invalid "vapid"
 authentication.  A 401 (Unauthorized) status code might be used if the
 authentication is absent; a 403 (Forbidden) status code might be used if
@@ -385,7 +358,7 @@ claim or more than 24 hours before the expiry time,</t>
   <t>the origin of the push resource is not included in the "aud" (Audience) claim,
 or</t>
   <t>the public key used to sign the JWT doesn't match the one that was included in
-the creation of the push subscription.</t>
+the creation of the push message subscription.</t>
 </list></t>
 
 <t>A push service MUST NOT forward the JWT or public key to the user agent when
@@ -513,17 +486,8 @@ parameter</t>
   [RFC8292]</t>
   <t hangText='Applications that use this media type:'>
   Web browsers, via the Web Push protocol <xref target="RFC8030"/></t>
-
-<!--[rfced]  Is RFC 7159 the correct citation here? We do not see the terms
-"fragment" or "identifier" in RFC 7159. Is any clarification needed?
-
-Original
-   Fragment identifier considerations:  None, see [RFC7159].
-
-diff
--->
   <t hangText='Fragment identifier considerations:'>
-  none (see <xref target="RFC7159"/>)</t>
+  none</t>
   <t hangText='Additional information:'>
         <list style="hanging">
         <t hangText='Deprecated alias names for this type:'>
@@ -647,7 +611,6 @@ diff
 
 
 <?rfc include="reference.RFC.7517"?>
-<?rfc include="reference.RFC.3339"?>
 
     </references>
 
